@@ -1,15 +1,40 @@
 <ion-header>
-    <ion-navbar>
+
+    <!-- HEADER TOOLBAR -->
+    <ion-toolbar>
+
         <ion-title>Appuntamenti</ion-title>
-    </ion-navbar>
+        <ion-buttons end>
+            <span></span>
+            <button (click)="syncButton()" class="button-sync" ion-button icon-only>
+                        <ion-icon name="sync"></ion-icon>
+                    </button>
+        </ion-buttons>
+    </ion-toolbar>
+
+    <!-- GO TO DATE TOOLBAR -->
+    <ion-toolbar>
+        <div class="containerGoToDate">
+            <button id="prev" class="button-toolbar" ion-button clear icon-only>
+                                    <ion-icon name="arrow-back"></ion-icon>
+                                </button>
+            <button id="next" class="button-toolbar" ion-button clear icon-only>
+                                    <ion-icon name="arrow-forward"></ion-icon>
+                                </button>
+            <div class="divItemDivider">
+                <ion-item-divider>
+                    <ion-datetime displayFormat="DD/MM/YYYY" locale="it" pickerFormat="DD MMMM YYYY" [(ngModel)]="myDate" cancelText="Annulla" doneText="Fine" placeholder="Seleziona data"></ion-datetime>
+                </ion-item-divider>
+            </div>
+            <div class="divButtonDate">
+                <button ion-button clear (click)="goToDate()" right class="button-to-right">Vai</button>
+            </div>
+        </div>
+    </ion-toolbar>
+
 </ion-header>
 
-<ion-content padding>
-    <h2>Welcome to Ionic!</h2>
-    <p>
-        This starter project comes with simple tabs-based layout for apps that are going to primarily use a Tabbed UI.
-    </p>
-    <p>
-        Take a look at the <code>src/pages/</code> directory to add or change tabs, update any existing page or create new pages.
-    </p>
+<ion-content cache-view="false">
+    <!-- CALENDAR -->
+    <div id='calendar'></div>
 </ion-content>

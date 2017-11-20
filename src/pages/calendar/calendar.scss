@@ -1,1 +1,102 @@
-page-calendar {}
+page-calendar {
+    .label-container {
+        padding-top: 5px !important;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    .label-centered {
+        position: relative !important;
+        text-align: center !important;
+        line-height: 40px;
+        float: left;
+        padding-left: 3px;
+    }
+    .button-to-right {
+        float: right;
+        width: 100%;
+    }
+    .scroll-content {
+        margin-bottom: 0px !important;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        position: absolute;
+        z-index: 1;
+        display: block;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        will-change: scroll-position;
+        contain: size style layout;
+    }
+    .button-sync {
+        padding-right: 6px !important;
+        color: #e54137;
+    }
+    .button-toolbar {
+        float: left;
+        // padding-left: 5px !important;
+        // padding-right: 5px !important;
+    }
+    ion-item-divider {
+        border: 1px solid #dedede !important;
+        border-radius: 5px;
+    }
+    ion-datetime {
+        padding-right: 16px !important;
+    }
+    .containerGoToDate {
+        width: 100%;
+    }
+    .divItemDivider {
+        width: 60%;
+        float: left;
+        padding-left: 5px;
+        padding-right: 10px;
+    }
+    .divButtonDate {
+        width: 15%;
+        float: left;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .divButtonNav {
+        width: 25%;
+        float: left;
+    }
+    .login-modal {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.20);
+        z-index: 0;
+    }
+    .editable-image {
+        height: 200px;
+        text-align: center;
+    }
+    .product.modal {
+        background: transparent;
+    }
+    .slider {
+        height: 100%;
+    }
+    .slider-slide {
+        padding-top: 80px;
+        color: #000;
+        text-align: center;
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-weight: 300;
+    }
+    /** FORCE THE MODAL */
+    .active .modal-backdrop-bg {
+        opacity: 0.5;
+    }
+    .modal-backdrop-bg {
+        -webkit-transition: opacity 300ms ease-in-out;
+        transition: opacity 300ms ease-in-out;
+        background-color: #000;
+        opacity: 0;
+    }
+}
