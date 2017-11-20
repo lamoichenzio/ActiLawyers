@@ -1,1 +1,17 @@
-page-settings {}
+page-settings {
+    .right {
+        float: right;
+        margin-right: 14px;
+    }
+    .title-description {
+        padding-top: 5px;
+        background-color: #f1F1F1;
+        color: #1F1F1F;
+    }
+    .text-description {
+        padding: 10px 18px 0px 18px;
+    }
+    .container {
+        padding: 0 0 20px 0;
+    }
+}

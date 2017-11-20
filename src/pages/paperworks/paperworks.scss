@@ -1,1 +1,12 @@
-page-paperworks {}
+page-paperworks {
+    .dossier-item {
+        padding-left: 4px !important;
+    }
+    ion-searchbar {
+        background-color: #F7F7F7 !important;
+    }
+    .spinner {
+        width: 100%;
+        text-align: center;
+    }
+}

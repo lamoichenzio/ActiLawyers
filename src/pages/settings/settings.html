@@ -7,11 +7,19 @@
 </ion-header>
 
 <ion-content>
-    <ion-list>
-        <ion-list-header>Follow us on Twitter</ion-list-header>
-        <ion-item>
-            <ion-icon name="ionic" item-start></ion-icon>
-            @ionicframework
-        </ion-item>
-    </ion-list>
+
+    <div class="container">
+        <ion-item-divider class="title-description">Effettua il logout</ion-item-divider>
+        <p class="text-description">Effettuando il logout verranno eliminati anche tutti i dati scaricati dall'applicazione</p>
+        <button ion-button clear (click)="logout()" class="right">Logout</button>
+    </div>
+
+    <br>
+
+    <div class="container">
+        <ion-item-divider class="title-description">Elimina i dati</ion-item-divider>
+        <p class="text-description">Eliminando i dati, eliminerai tutti i dati sincronizzati e scaricati dall'applicazione</p>
+        <button ion-button clear (click)="buttonDelete()" class="right">Elimina Dati</button>
+    </div>
+
 </ion-content>
