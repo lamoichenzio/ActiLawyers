@@ -5,7 +5,7 @@ import { MyApp } from './app.component';
 
 import { PaperworksPage } from '../pages/paperworks/paperworks';
 import { SettingsPage } from '../pages/settings/settings';
-import { EventsPage } from '../pages/events/events';
+import { CalendarPage } from '../pages/calendar/calendar';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -16,7 +16,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     PaperworksPage,
     SettingsPage,
-    EventsPage,
+    CalendarPage,
     TabsPage
   ],
   imports: [
@@ -28,7 +28,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     PaperworksPage,
     SettingsPage,
-    EventsPage,
+    CalendarPage,
     TabsPage
   ],
   providers: [
