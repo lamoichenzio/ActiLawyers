@@ -1,3 +1,29 @@
 page-login-modal {
-
+    .container-users {
+        width: 100%;
+        font-size: 1.6rem;
+        color: #1F1F1F;
+    }
+    .label-users {
+        padding: 10px 16px 0 16px;
+    }
+    .user-text {
+        padding-top: -4px;
+        padding-left: 16px;
+        color: #e54137;
+        font-weight: bold;
+    }
+    .title-description {
+        padding-top: 5px;
+        background-color: #f1F1F1;
+        color: #1F1F1F;
+    }
+    .password-input {
+        padding: 0px 6px 0 6px;
+    }
+    .right {
+        float: right;
+        width: 100px;
+        margin-right: 14px;
+    }
 }

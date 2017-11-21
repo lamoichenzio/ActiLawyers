@@ -1,12 +1,7 @@
+import { Platform } from 'ionic-angular';
+import { AlertController, ToastController, ViewController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the LoginModalPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -15,11 +10,26 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LoginModalPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  
+  public userName;
+  public status;
+  public password = new String;
+
+
+  constructor(public navCtrl: NavController, public platform: Platform, public navParams: NavParams, public viewCtrl: ViewController) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginModalPage');
+
+  selectUser() {
+
+   // to do
   }
+
+  loginButton() {
+
+    // to do
+  }
+
+  
 
 }
