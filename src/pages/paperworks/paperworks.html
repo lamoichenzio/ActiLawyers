@@ -2,15 +2,22 @@
     <ion-navbar>
         <ion-title>Pratiche</ion-title>
     </ion-navbar>
-    <ion-searchbar [showCancelButton]="true" placeholder="Cerca una pratica..."></ion-searchbar>
+    <ion-searchbar (ionInput)="getPaperworks($event)" (ionCancel)="onCancel()" [showCancelButton]="true" placeholder="Cerca una pratica..."></ion-searchbar>
 </ion-header>
 
 <ion-content>
 
     <ion-list padding>
 
-        <!-- view list pf paperworks -->
+        <div id="spinner" class="spinner">
+            <ion-spinner></ion-spinner>
+        </div>
 
+        <button ion-item="ion-item" *ngFor="let paperwork of paperworks; let pratica = index" (click)="openPaperwork(pratica)" class="dossier-item">
+                    <h2>{{ paperwork.paperwork_json.paperwork }}</h2>
+                    <h3>{{ paperwork.paperwork_json.creation_date }}</h3>
+                    <p>{{ paperwork.paperwork_json.curia }}</p>
+                </button>
     </ion-list>
 
 </ion-content>

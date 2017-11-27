@@ -11,7 +11,14 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { File } from '@ionic-native/file';
+import { FileOpener } from '@ionic-native/file-opener';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { NativeStorage } from '@ionic-native/native-storage';
+import { HTTP } from '@ionic-native/http';
 import { HttpModule } from '@angular/http';
+import { DatePicker } from '@ionic-native/date-picker';
+import { SpinnerDialog } from '@ionic-native/spinner-dialog';
 
 
 @NgModule({
@@ -40,6 +47,13 @@ import { HttpModule } from '@angular/http';
     StatusBar,
     SplashScreen,
     File,
+    FileOpener,
+    FileTransfer, 
+    FileTransferObject,
+    NativeStorage,
+    SpinnerDialog,
+    HTTP,
+    DatePicker,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -11,6 +11,7 @@
     <div class="container-users">
         <div class="label-users" (click)="selectUser()">
             <ion-icon name="person"></ion-icon>
+            <span class="user-text" id="user" *ngIf="selectedUser">{{ selectedUser.name }}</span>
         </div>
     </div>
 
