@@ -17,7 +17,10 @@ import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { HTTP } from '@ionic-native/http';
 import { HttpModule } from '@angular/http';
+
+
 import { DatePicker } from '@ionic-native/date-picker';
+
 import { SpinnerDialog } from '@ionic-native/spinner-dialog';
 
 

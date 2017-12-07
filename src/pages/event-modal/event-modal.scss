@@ -1,3 +1,36 @@
 page-event-modal {
-
+    .modal-container {
+        height: 95%;
+        padding-top: 1px;
+    }
+    .container-information {
+        height: 85%;
+        overflow: scroll;
+    }
+    .title-information {
+        background-color: #F8F8F8;
+        border-bottom: 1px solid #D8D8D8;
+        border-top: 1px solid #F1F1F1;
+        padding: 8px;
+        font-size: 14pt;
+    }
+    .info-text {
+        padding-left: 14px;
+        padding-right: 14px;
+        padding-bottom: 16px;
+        font-size: 12pt;
+        border-bottom: 1px solid #F1F1F1;
+    }
+    .container-button {
+        height: 15%;
+    }
+    .button-pratica {
+        text-align: center;
+        align-items: center;
+        top: 50%;
+        left: 2%;
+        height: 60px;
+        width: 95%;
+        vertical-align: bottom;
+    }
 }

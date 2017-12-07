@@ -260,7 +260,7 @@ public pratica;
         for (var index = 0; index < cont; index++) {
 
           var current = moment(arraySection[index].inizio);
-          var pratica = arraySection[index].pratica_json;
+          var pratica = arraySection[index].paperwork_json;
 
           days.forEach(dayyy => {
 
@@ -269,8 +269,8 @@ public pratica;
 
             if (index == currentDay) {
               if (pratica != undefined) {
-                if (pratica.documenti != undefined) {
-                  pratica.documenti.forEach(document => {
+                if (pratica.documents != undefined) {
+                  pratica.documents.forEach(document => {
                     contEvents++;
                   });
                 }
@@ -279,9 +279,9 @@ public pratica;
 
             if (index == currentDay) {
               if (pratica != undefined) {
-                if (pratica.documenti != undefined) {
+                if (pratica.documents != undefined) {
 
-                  pratica.documenti.forEach(document => {
+                  pratica.documents.forEach(document => {
                     const fileTransfer: FileTransferObject = this.transfer.create();
                     const url = GlobalVar.serverUrl + 'file?id=' + document.id;
                     fileTransfer.download(url, this.file.externalApplicationStorageDirectory + 'documents/' + pratica.id + '/' + document.name)
