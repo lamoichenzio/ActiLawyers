@@ -332,16 +332,16 @@ public pratica;
 
       () => {
 
-        // LOAD USERS
-        this.nativeStorage.getItem('loginStatus')
-        .then(
-        data => {
-          if (!data["isLogged"]) {
-            this.login();
-          }
-        },
-        error => this.login()
-        );
+        // // LOAD USERS
+        // this.nativeStorage.getItem('loginStatus')
+        // .then(
+        // data => {
+        //   if (!data["isLogged"]) {
+        //     this.login();
+        //   }
+        // },
+        // error => this.login()
+        // );
 
         // LOAD EVENTS
         this.nativeStorage.getItem("events")
