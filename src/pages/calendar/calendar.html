@@ -15,19 +15,25 @@
     <!-- GO TO DATE TOOLBAR -->
     <ion-toolbar>
         <div class="containerGoToDate">
-            <button id="prev" class="button-toolbar" ion-button clear icon-only>
+            <div class="col-md-2 col-sm-2 col-xs-4 no-padding">
+                <button id="prev" class="button-toolbar" ion-button clear icon-only>
                                     <ion-icon name="arrow-back"></ion-icon>
                                 </button>
-            <button id="next" class="button-toolbar" ion-button clear icon-only>
+                <button id="next" class="button-toolbar" ion-button clear icon-only>
                                     <ion-icon name="arrow-forward"></ion-icon>
                                 </button>
-            <div class="divItemDivider">
-                <ion-item-divider>
-                    <ion-datetime displayFormat="DD/MM/YYYY" locale="it" pickerFormat="DD MMMM YYYY" [(ngModel)]="myDate" cancelText="Annulla" doneText="Fine" placeholder="Seleziona data"></ion-datetime>
-                </ion-item-divider>
             </div>
-            <div class="divButtonDate">
+            <div class="col-md-8 col-sm-8 col-xs-6 no-padding">
+                <div class="divItemDivider no-padding">
+                    <ion-item-divider>
+                        <ion-datetime displayFormat="DD/MM/YYYY" locale="it" pickerFormat="DD MMMM YYYY" [(ngModel)]="myDate" cancelText="Annulla" doneText="Fine" placeholder="Seleziona data"></ion-datetime>
+                    </ion-item-divider>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-2 no-padding">
+
                 <button ion-button clear (click)="goToDate()" right class="button-to-right">Vai</button>
+
             </div>
         </div>
     </ion-toolbar>

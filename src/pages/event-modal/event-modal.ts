@@ -1,4 +1,3 @@
-import { GlobalVar } from './../../app/global';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Component } from '@angular/core';
 import { IonicPage, LoadingController, ModalController, NavController, NavParams } from 'ionic-angular';

@@ -11,9 +11,11 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
+
 import { FileOpener } from '@ionic-native/file-opener';
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { HTTP } from '@ionic-native/http';
 import { HttpModule } from '@angular/http';
