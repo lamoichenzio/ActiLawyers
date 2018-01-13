@@ -13,7 +13,7 @@
             <ion-spinner></ion-spinner>
         </div>
 
-        <button ion-item="ion-item" *ngFor="let paperwork of paperworks; let pratica = index" (click)="openPaperwork(pratica)" class="dossier-item">
+        <button ion-item="ion-item" *ngFor="let paperwork of paperworks; let paperworkID = index" (click)="openPaperwork(paperworkID)" class="dossier-item">
                     <h2>{{ paperwork.paperwork_json.paperwork }}</h2>
                     <h3>{{ paperwork.paperwork_json.creation_date }}</h3>
                     <p>{{ paperwork.paperwork_json.curia }}</p>

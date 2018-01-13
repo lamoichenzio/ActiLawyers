@@ -1,3 +1,55 @@
 page-paperwork-item {
-
+    ion-slide {
+        align-items: flex-start !important;
+        float: left;
+        overflow: scroll;
+    }
+    ion-item-divider {
+        text-align: left;
+        color: #000000 !important;
+    }
+    ion-slides {
+        height: 100%;
+    }
+    #subheader {
+        background-color: fff !important;
+        text-align: left;
+        padding-top: 10px;
+        height: 72px;
+        padding-left: 8px;
+        padding-right: 5px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid;
+        border-bottom-color: #DBD9DB;
+    }
+    .info-content {
+        font-size: 1.6rem;
+        padding: 16px;
+        line-height: 1.6;
+        text-align: left !important;
+        vertical-align: baseline;
+    }
+    .bold {
+        font-weight: bold;
+    }
+    .title-container {
+        padding: 10px;
+        font-weight: bold;
+        float: left;
+    }
+    .other-container {
+        float: right;
+        padding: 10px;
+        color: #797779;
+    }
+    .no-documents-container {
+        padding: 20px;
+        font-size: 2.0rem;
+    }
+    .download-container {
+        margin-top: -8px;
+    }
+    .persona-title {
+        font-weight: bold;
+    }
 }

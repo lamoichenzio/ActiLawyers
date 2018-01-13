@@ -32,7 +32,7 @@ export class PaperworksPage {
   // SET PAPERWORKS LIST
   initilizePaperworks() {
 
-    this.paperworks= [];
+    this.paperworks = [];
     this.nativeStorage.getItem("paperworks")
       .then(
       data => {
@@ -56,7 +56,7 @@ export class PaperworksPage {
 
   // SERACHBAR FOR PAPERWORKS
   getPaperworks(ev: any) {
-    
+
     // set val to the value of the searchbar
     let val = ev.target.value;
 

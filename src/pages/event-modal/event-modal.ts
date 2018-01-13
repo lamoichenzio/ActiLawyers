@@ -13,7 +13,7 @@ import 'moment/locale/it';
 export class EventModalPage {
 
   public loader;
-  public pratica_json;
+  public paperwork_json;
   public result: any = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public loaderCtrl: LoadingController, public viewCtrl: ViewController, public nativeStorage: NativeStorage, public modalCtrl: ModalController) {
@@ -28,14 +28,14 @@ export class EventModalPage {
         value = data.array.data[navParams.get('index')];
         moment.locale('it');
         this.result = {
-          descrizione: value['descrizione'],
-          inizio: moment(value['inizio']).format("dddd DD-MM-YYYY h:mm:ss"),
-          fine: moment(value['fine']).format("dddd DD-MM-YYYY h:mm:ss")
+          description: value['description'],
+          start: moment(value['start']).format("dddd DD-MM-YYYY h:mm:ss"),
+          ending: moment(value['ending']).format("dddd DD-MM-YYYY h:mm:ss")
         };
         
-        this.pratica_json = value['pratica_json'];
-        if (value['pratica_json'] != undefined) {
-          $("#pratica").removeAttr("disabled");
+        this.paperwork_json = value['paperwork_json'];
+        if (value['paperwork_json'] != undefined) {
+          $("#paperwork").removeAttr("disabled");
         }
         this.closeLoader();
       },
@@ -48,7 +48,7 @@ export class EventModalPage {
   // OPEN PAPERWORK PAGE 
   openPaperwork() {
 
-    this.navCtrl.push('PaperworkItemPage', { pratica: this.pratica_json });
+    this.navCtrl.push('PaperworkItemPage', { paperwork: this.paperwork_json });
   };
 
   // -- start LOADER

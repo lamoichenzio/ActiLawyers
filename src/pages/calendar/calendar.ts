@@ -16,7 +16,7 @@ import { GlobalVar } from '../../app/global';
 
 export class CalendarPage {
 
-public pratica;
+  public paperwork;
 
   public idUser;
   public startLoader;
@@ -128,7 +128,7 @@ public pratica;
       .then(
       data => {
         var paperworksData = $.parseJSON(data.data);
-        this.pratica = paperworksData[508];
+        this.paperwork = paperworksData[508];
         this.nativeStorage.setItem('paperworks', { array: paperworksData })
           .then(
           data => console.log(paperworksData),
@@ -153,7 +153,7 @@ public pratica;
         var newEvents = new Array();
         for (var index = 0; index < data.array.data.length; index++) {
           newEvents.push(
-            { id: data.array.data[index].id, title: data.array.data[index].descrizione, start: moment(data.array.data[index].inizio), index: index }
+            { id: data.array.data[index].id, title: data.array.data[index].descrizione, start: moment(data.array.data[index].start), index: index }
           );
         };
         $('#calendar').fullCalendar('removeEvents');
@@ -175,7 +175,7 @@ public pratica;
     var temp = moment(this.myDate);
     if (temp != undefined) {
       $('#calendar').fullCalendar('gotoDate', temp);
-    };    
+    };
   }
 
   // -- begin LOADER
@@ -259,8 +259,8 @@ public pratica;
         // CHECK AND DOWNLOAD DOCUMENTS OF EVENTS IN CURRENT WEEK
         for (var index = 0; index < cont; index++) {
 
-          var current = moment(arraySection[index].inizio);
-          var pratica = arraySection[index].paperwork_json;
+          var current = moment(arraySection[index].start);
+          var paperwork = arraySection[index].paperwork_json;
 
           days.forEach(dayyy => {
 
@@ -268,9 +268,9 @@ public pratica;
             var currentDay = current.get('year') + "-" + current.get('month') + "-" + current.get('day');
 
             if (index == currentDay) {
-              if (pratica != undefined) {
-                if (pratica.documents != undefined) {
-                  pratica.documents.forEach(document => {
+              if (paperwork != undefined) {
+                if (paperwork.documents != undefined) {
+                  paperwork.documents.forEach(document => {
                     contEvents++;
                   });
                 }
@@ -278,13 +278,13 @@ public pratica;
             }
 
             if (index == currentDay) {
-              if (pratica != undefined) {
-                if (pratica.documents != undefined) {
+              if (paperwork != undefined) {
+                if (paperwork.documents != undefined) {
 
-                  pratica.documents.forEach(document => {
+                  paperwork.documents.forEach(document => {
                     const fileTransfer: FileTransferObject = this.transfer.create();
                     const url = GlobalVar.serverUrl + 'file?id=' + document.id;
-                    fileTransfer.download(url, this.file.externalApplicationStorageDirectory + 'documents/' + pratica.id + '/' + document.name)
+                    fileTransfer.download(url, this.file.externalApplicationStorageDirectory + 'documents/' + paperwork.id + '/' + document.name)
                       .then(
 
                       (entry) => {
@@ -332,16 +332,16 @@ public pratica;
 
       () => {
 
-        // // LOAD USERS
-        // this.nativeStorage.getItem('loginStatus')
-        // .then(
-        // data => {
-        //   if (!data["isLogged"]) {
-        //     this.login();
-        //   }
-        // },
-        // error => this.login()
-        // );
+        // LOAD USERS
+        this.nativeStorage.getItem('loginStatus')
+          .then(
+          data => {
+            if (!data["isLogged"]) {
+              this.login();
+            }
+          },
+          error => this.login()
+          );
 
         // LOAD EVENTS
         this.nativeStorage.getItem("events")
@@ -352,7 +352,7 @@ public pratica;
             var newEvents = new Array();
             for (var index = 0; index < data.array.data.length; index++) {
               newEvents.push(
-                { id: data.array.data[index].id, title: data.array.data[index].descrizione, start: moment(data.array.data[index].inizio), index: index }
+                { id: data.array.data[index].id, title: data.array.data[index].description, start: moment(data.array.data[index].start), index: index }
               );
             };
             $('#calendar').fullCalendar('removeEvents');

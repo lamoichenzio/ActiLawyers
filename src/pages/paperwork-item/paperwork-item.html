@@ -1,18 +1,185 @@
-<!--
-  Generated template for the PaperworkItemPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>paperwork-item</ion-title>
-  </ion-navbar>
+    <!-- HEADER TOOLBAR -->
+    <ion-toolbar>
+        <ion-title id="title">Pratica</ion-title>
+        <ion-buttons start="start">
+            <button id="prev-month" ion-button="ion-button" icon-only="icon-only" (click)="closeModal()">
+                    <ion-icon name="close"></ion-icon>
+                </button>
+        </ion-buttons>
+    </ion-toolbar>
 
+    <!-- SEGMENT -->
+    <ion-toolbar>
+        <ion-segment>
+            <ion-segment-button (click)="paperSlide()">Scheda</ion-segment-button>
+
+            <ion-segment-button (click)="peopleSlide()">Persone</ion-segment-button>
+
+            <ion-segment-button (click)="documentsSlide()">Documenti</ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
 </ion-header>
 
+<ion-content>
+    <!-- START SLIDER -->
+    <ion-slides>
 
-<ion-content padding>
+        <!-- START SLIDE SCHEDA -->
+        <ion-slide>
+            <div id="subheader">
+                <div class="title-container">Scheda</div>
+            </div>
 
+            <ion-item-group>
+                <ion-item-divider color="light">Tipo:</ion-item-divider>
+
+                <div class="info-content">{{ result.type }}</div>
+
+                <ion-item-divider color="light">Legale:</ion-item-divider>
+
+                <div class="info-content">{{result.lawyer}}</div>
+
+                <ion-item-divider color="light">Data di creazione:</ion-item-divider>
+
+                <div class="info-content">{{result.creatin_date}}</div>
+
+                <ion-item-divider color="light">Ultima modifica: </ion-item-divider>
+
+                <div class="info-content">{{result.last_change}}</div>
+
+                <ion-item-divider color="light">Nome dell'Ufficio Giudiziario: </ion-item-divider>
+
+                <div class="info-content">{{result.court_office_name}}</div>
+
+                <ion-item-divider color="light">Descrizione: </ion-item-divider>
+
+                <div class="info-content">{{result.description}}</div>
+
+                <ion-item-divider color="light">Ruolo: </ion-item-divider>
+
+                <div class="info-content">{{result.role}}</div>
+
+                <ion-item-divider color="light">Procedura: </ion-item-divider>
+
+                <div class="info-content">{{result.procedura}}</div>
+
+                <ion-item-divider color="light">Istruttore: </ion-item-divider>
+
+                <div class="info-content">{{result.istructor}}</div>
+
+                <ion-item-divider color="light">Materia: </ion-item-divider>
+
+                <div class="info-content">{{result.topic}}</div>
+
+                <ion-item-divider color="light">Ruolo del cliente: </ion-item-divider>
+
+                <div class="info-content">{{result.client_role}}</div>
+
+                <ion-item-divider color="light">Pratica: </ion-item-divider>
+
+                <div class="info-content">{{result.paperwork}}</div>
+            </ion-item-group>
+        </ion-slide>
+        <!-- END SLIDE SCHEDA -->
+
+        <!-- START SLIDE PERSONE -->
+        <ion-slide>
+            <div id="subheader">
+                <div class="title-container">Persone</div>
+            </div>
+
+            <ion-list>
+                <div *ngFor="let persona of peopleArray; let i=index">
+                    <ion-item-divider (click)="show(i)" class="persona-title">
+                        <div class=container-title> {{persona.surname}} {{persona.name}}
+                            <ion-icon id="arrow{{i}}" class="arrow" name="arrow-dropright"></ion-icon>
+                        </div>
+                    </ion-item-divider>
+                    <ion-list id="lista{{i}}" class="hidden">
+
+                        <ion-item-divider color="light">Ordine: </ion-item-divider>
+
+                        <div class="info-content">{{persona.order_number}}</div>
+
+                        <ion-item-divider color="light">Ruolo: </ion-item-divider>
+
+                        <div class="info-content">{{persona.role}}</div>
+
+                        <ion-item-divider color="light">Cognome: </ion-item-divider>
+
+                        <div class="info-content">{{persona.surname}}</div>
+
+                        <ion-item-divider color="light">Nome: </ion-item-divider>
+
+                        <div class="info-content">{{persona.name}}</div>
+
+                        <ion-item-divider color="light">Sesso: </ion-item-divider>
+
+                        <div class="info-content">{{persona.sex}}</div>
+
+                        <ion-item-divider color="light">Data di nascita: </ion-item-divider>
+
+                        <div class="info-content">{{persona.birthday}}</div>
+
+                        <ion-item-divider color="light">Luogo di nascita: </ion-item-divider>
+
+                        <div class="info-content">{{persona.birthday_place}}</div>
+
+                        <ion-item-divider color="light">Codice Fiscale: </ion-item-divider>
+
+                        <div class="info-content">{{persona.fiscal_code}}</div>
+
+                        <ion-item-divider color="light">Indirizzo: </ion-item-divider>
+
+                        <div class="info-content">{{persona.address}}</div>
+
+                        <ion-item-divider color="light">Città: </ion-item-divider>
+
+                        <div class="info-content">{{persona.citta}}</div>
+
+                        <ion-item-divider color="light">CAP: </ion-item-divider>
+
+                        <div class="info-content">{{persona.cap}}</div>
+
+                        <ion-item-divider color="light">Provincia: </ion-item-divider>
+
+                        <div class="info-content">{{persona.province}}</div>
+
+                    </ion-list>
+                </div>
+            </ion-list>
+        </ion-slide>
+        <!-- END SLIDE PERSONE -->
+
+        <!-- START SLIDE DOCUMENTI -->
+        <ion-slide>
+            <div id="subheader">
+                <div class="title-container">Documenti</div>
+
+                <div class="other-container">
+                    <ion-label id="already-downloaded">Già scaricati</ion-label>
+
+                    <button ion-button id="download-button" clear class="download-container" (click)="downloadDocument()">Scarica i documenti</button>
+                </div>
+            </div>
+
+            <div id="no-documents" class="no-documents-container">Non ci sono documenti</div>
+
+            <ion-list padding="padding">
+                <button ion-item="ion-item" *ngFor="let document of documents; let i=index" text-wrap="text-wrap" (click)="openDocuments(i)" class="dossier-item">
+                        <h2 class="bold">{{ document.category }}</h2>
+    
+                        <h2>Nome: {{ document.name }}</h2>
+    
+                        <h3>Mittente: {{ document.sender }}</h3>
+    
+                        <h3>Modificato il: {{ document.last_change }}</h3>
+                    </button>
+            </ion-list>
+        </ion-slide>
+        <!-- END SLIDE DOCUMENTI -->
+    </ion-slides>
+    <!-- END SLIDER -->
 </ion-content>

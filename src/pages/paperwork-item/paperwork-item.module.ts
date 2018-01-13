@@ -10,4 +10,4 @@ import { PaperworkItemPage } from './paperwork-item';
     IonicPageModule.forChild(PaperworkItemPage),
   ],
 })
-export class PaperworkItemPageModule {}
+export class PaperworkItemPageModule { }
