@@ -32,6 +32,7 @@ export class LoginModalPage {
 
   // SELECT USER AND SET IN PLACEHOLDER
   selectUser() {
+    console.log(GlobalVar.serverUrl);
 
     this.http.get(GlobalVar.serverUrl + 'users', {}, {})
       .then(
@@ -59,6 +60,8 @@ export class LoginModalPage {
 
   // LOGIN FUNCTION
   loginButton() {
+    console.log(GlobalVar.serverUrl);
+
     console.log("user: " + this.selectedUser.id + "---- password: " + this.password);
     var url = GlobalVar.serverUrl + 'login?userId=' + this.selectedUser.id + '&password=' + this.password;
     this.http.get(encodeURI(url), {}, {})
@@ -131,7 +134,7 @@ export class LoginModalPage {
   }
 
   getUsers() {
-
+    console.log(GlobalVar.serverUrl);
     this.http.get(GlobalVar.serverUrl + 'users', {}, {})
       .then(
       data => {
@@ -177,6 +180,53 @@ export class LoginModalPage {
       }
     });
     alert.present();
+  }
+
+
+  changeIpAlert(){
+
+    let alert = this.alertCtrl.create({
+      title: 'Imposta IP server',
+      inputs: [
+        {
+          id: "ip",
+          name: 'ip',
+          placeholder: 'ip'
+        },
+        {
+          id: "port",
+          name: 'port',
+          placeholder: 'port',
+        }
+      ],
+      buttons: [
+        {
+          text: 'Annulla',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Imposta',
+          handler: data => {
+
+            var address = "http://"+data.ip+":"+data.port+"/";
+            GlobalVar.serverUrl = address;
+
+            this.nativeStorage.setItem('ipServer', address)
+              .then(
+              data => {
+                console.log("serverIp Stored");
+              });
+
+            console.log("IP server changed --- "+ address);
+          }
+        }
+      ]
+    });
+    alert.present();
+  
   }
 
 }

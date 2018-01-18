@@ -367,6 +367,17 @@ export class CalendarPage {
 
       () => {
 
+        this.nativeStorage.getItem('ipServer')
+        .then(
+          data => {
+            console.log(data);
+
+            GlobalVar.serverUrl = data;
+            console.log(GlobalVar.serverUrl);
+          }
+
+        );
+
         // LOAD USERS
         this.nativeStorage.getItem('loginStatus')
           .then(
