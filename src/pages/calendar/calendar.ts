@@ -28,7 +28,7 @@ export class CalendarPage {
 
     $(document).ready(function () {
 
-      // CCALENDAR BUTTON
+      // CALENDAR BUTTON
       $('#prev').click(function () {
         $('#calendar').fullCalendar('prev');
       });
@@ -145,30 +145,7 @@ export class CalendarPage {
     );
   }
 
-  // RELOAD EVENTS IN FULLCALENDAR PLUGIN
-  reloadEvents() {
-    this.nativeStorage.getItem('events')
-      .then(
-      data => {
-        var newEvents = new Array();
-        for (var index = 0; index < data.array.data.length; index++) {
-          newEvents.push(
-            { id: data.array.data[index].id, title: data.array.data[index].descrizione, start: moment(data.array.data[index].start), index: index }
-          );
-        };
-        $('#calendar').fullCalendar('removeEvents');
-        $('#calendar').fullCalendar('addEventSource', newEvents);
-        console.log("debug 22");
-        this.downloadDocumentsOfWeek();
-      },
-      error => {
-        console.log(error);
-      },
-    )
-      .catch(
-      error => console.log(error),
-    );
-  }
+  
 
   // JUMP TO SPECIFIC DATE IN FULLCALENDAR
   goToDate() {
@@ -222,50 +199,85 @@ export class CalendarPage {
   }
   // -- end STARTLOADER
 
-  downloadDocumentsOfWeek() {
+  deleteFilesAndDownload() {
 
-    this.file.removeRecursively(this.file.externalApplicationStorageDirectory, 'documents/')
-      .then(
-      data => { console.log("data deleted") },
-      error => console.log(error),
-    );
+    if(this.platform.is("android")){
+      this.file.removeRecursively(this.file.externalApplicationStorageDirectory, 'documents/')
+        .then(
+        data => {
+          this.downloadDocument();
+          console.log("Old files deleted")
+        },
+        error => {
+          this.downloadDocument();
+          console.log("No files to delete")
+        }
+        );
+    }
+
+    if(this.platform.is("ios")){
+      this.file.removeRecursively(this.file.dataDirectory, 'documents/')
+        .then(
+        data => {
+          this.downloadDocument();
+          console.log("Old files deleted")
+        },
+        error => {
+          this.downloadDocument();
+          console.log("No files to delete")
+        }
+        );
+    }
+  }
+
+  downloadDocument() {
 
     // CREATE CURRENT WEEK
+    console.log("create current week");
+
     var startOfWeek = moment().startOf('isoWeek');
     var endOfWeek = moment().endOf('isoWeek');
     var days = [];
     var dayyy = startOfWeek;
 
+
     while (dayyy <= endOfWeek) {
-      days.push(dayyy.toDate());
+      console.log("ciclo");
+
+      days.push(dayyy.format("YYYY-MM-DD"));
       dayyy = dayyy.clone().add(1, 'd');
     }
 
+    console.log("array of week" + days);
     // CHECK IF EVENTS ARE IN CURRENT WEEK
+
     this.nativeStorage.getItem('events')
       .then(
       data => {
-        // TAKE AT MOST LAST 100 EVENTS
-        var cont = 100;
-        var arraySection = data.array.data;
-        if (arraySection.length <= 100) {
-          cont = arraySection.length;
-        };
+
+        // TAKE AT MOST LAST 200 EVENTS
+        var arraySection = data.array.data.slice(Math.max(data.array.data.length - 10));
+        arraySection.forEach(element => {
+          console.log(element.start);
+        });
 
         // COUNTER FOR END SYNC LOADER
         var contEvents = 0;
         var tempEvents = 0;
 
         // CHECK AND DOWNLOAD DOCUMENTS OF EVENTS IN CURRENT WEEK
-        for (var index = 0; index < cont; index++) {
+        for (var index = 0; index < arraySection.length; index++) {
 
-          var current = moment(arraySection[index].start);
+          console.log(arraySection[index]);
+          var current = arraySection[index].start;
           var paperwork = arraySection[index].paperwork_json;
 
           days.forEach(dayyy => {
 
-            var index = moment(dayyy).get('year') + "-" + moment(dayyy).get('month') + "-" + moment(dayyy).get('day');
-            var currentDay = current.get('year') + "-" + current.get('month') + "-" + current.get('day');
+            console.log(moment(current).format("YYYY-MM-DD"));
+
+            var index = dayyy;
+            var currentDay = moment(current).format("YYYY-MM-DD");
 
             if (index == currentDay) {
               if (paperwork != undefined) {
@@ -284,23 +296,45 @@ export class CalendarPage {
                   paperwork.documents.forEach(document => {
                     const fileTransfer: FileTransferObject = this.transfer.create();
                     const url = GlobalVar.serverUrl + 'file?id=' + document.id;
-                    fileTransfer.download(url, this.file.externalApplicationStorageDirectory + 'documents/' + paperwork.id + '/' + document.name)
-                      .then(
 
-                      (entry) => {
-                        console.log('download complete: ' + entry.toURL());
-                        tempEvents++;
+                    if(this.platform.is("android")){
+                      fileTransfer.download(url, this.file.externalApplicationStorageDirectory + 'documents/' + paperwork.id + '/' + document.name)
+                        .then(
 
-                        if (tempEvents == contEvents) {
+                        (entry) => {
+                          console.log('download complete: ' + entry.toURL());
+                          tempEvents++;
+
+                          if (tempEvents == contEvents) {
+                            this.closeLoader();
+                          }
+                        },
+                        (error) => {
+                          console.log(error);
                           this.closeLoader();
-                        }
-                      },
-                      (error) => {
-                        console.log(error);
-                        this.closeLoader();
-                      }).catch(
-                      error => console.log(error),
-                    );
+                        }).catch(
+                        error => console.log(error),
+                      );
+                    }
+                    if(this.platform.is("ios")){ 
+                      fileTransfer.download(url, this.file.dataDirectory + 'documents/' + paperwork.id + '/' + document.name)
+                        .then(
+
+                        (entry) => {
+                          console.log('download complete: ' + entry.toURL());
+                          tempEvents++;
+
+                          if (tempEvents == contEvents) {
+                            this.closeLoader();
+                          }
+                        },
+                        (error) => {
+                          console.log(error);
+                          this.closeLoader();
+                        }).catch(
+                        error => console.log(error),
+                      );
+                    }
                   });
 
                 }
@@ -320,6 +354,7 @@ export class CalendarPage {
       .catch(
       error => console.log(error),
     );
+
   }
 
   ionViewDidEnter() {
@@ -343,6 +378,8 @@ export class CalendarPage {
           error => this.login()
           );
 
+
+
         // LOAD EVENTS
         this.nativeStorage.getItem("events")
           .then(
@@ -357,23 +394,58 @@ export class CalendarPage {
             };
             $('#calendar').fullCalendar('removeEvents');
             $('#calendar').fullCalendar('addEventSource', newEvents);
+            $('#calendar').fullCalendar('rerenderEvents');
+            $('#calendar').fullCalendar('refetchEvents')
+            $('#calendar').fullCalendar('render');
+
+
             this.closeStartLoader();
           },
           error => {
             $('#calendar').fullCalendar('removeEvents');
+            $('#calendar').fullCalendar('rerenderEvents');
+            $('#calendar').fullCalendar('refetchEvents')
+            $('#calendar').fullCalendar('render');
+
+
             console.log(error);
             this.closeStartLoader();
           },
         )
-
-
-
 
       },
 
     );
 
   }
+
+  // RELOAD EVENTS IN FULLCALENDAR PLUGIN
+  reloadEvents() {
+    this.nativeStorage.getItem('events')
+      .then(
+      data => {
+        var newEvents = new Array();
+        for (var index = 0; index < data.array.data.length; index++) {
+          newEvents.push(
+            { id: data.array.data[index].id, title: data.array.data[index].description, start: moment(data.array.data[index].start), index: index }
+          );
+        };
+        $('#calendar').fullCalendar('removeEvents');
+        $('#calendar').fullCalendar('addEventSource', newEvents);
+        $('#calendar').fullCalendar('rerenderEvents');
+        $('#calendar').fullCalendar('refetchEvents')
+        $('#calendar').fullCalendar('render');
+        this.deleteFilesAndDownload();
+      },
+      error => {
+        console.log(error);
+      },
+    )
+      .catch(
+      error => console.log(error),
+    );
+  }
+  
 
 }
 

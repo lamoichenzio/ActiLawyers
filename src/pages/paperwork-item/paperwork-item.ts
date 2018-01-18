@@ -62,41 +62,83 @@ export class PaperworkItemPage {
     this.documents = this.value.documents;
 
     // CHECK AVAIBLE DOWNLOAD
-    this.fileCtrl.checkDir(this.fileCtrl.externalApplicationStorageDirectory, 'documents/' + this.value.id)
-      .then(
-      _ => {
-        console.log(this.value['documents']);
-        $('#download-button').addClass('hidden');
-        $('#no-documents').addClass('hidden');
-        console.log('Directory exists');
-        this.fileCtrl.listDir(this.fileCtrl.externalApplicationStorageDirectory, 'documents/' + this.value.id)
-          .then(
-          data => {
-            for (var index = 0; index < data.length; index++) {
-              this.documentsDownloaded.push(
-                { 'name': data[index].name, 'path': data[index].nativeURL },
-              );
-            }
-          }
-          )
-        console.log(this.value['documents']);
-      }
-      )
-      .catch(
-      err => {
-        console.log('Directory doesnt exist');
-        if (this.value.documents[0] == undefined) {
-          $('#already-downloaded').addClass('hidden');
-          $('#no-documents').removeClass("hidden");
+    if (this.platform.is('android')) {
+      this.fileCtrl.checkDir(this.fileCtrl.applicationStorageDirectory, 'documents/' + this.value.id)
+        .then(
+        _ => {
+          console.log(this.value['documents']);
           $('#download-button').addClass('hidden');
+          $('#no-documents').addClass('hidden');
+          console.log('Directory exists');
+          this.fileCtrl.listDir(this.fileCtrl.applicationStorageDirectory, 'documents/' + this.value.id)
+            .then(
+            data => {
+              for (var index = 0; index < data.length; index++) {
+                this.documentsDownloaded.push(
+                  { 'name': data[index].name, 'path': data[index].nativeURL },
+                );
+              }
+            }
+            )
+          console.log(this.value['documents']);
         }
-        else {
-          $('#already-downloaded').addClass('hidden');
-          $('#no-documents').addClass("hidden");
-          $('#download-button').removeClass('hidden');
+        )
+        .catch(
+        err => {
+          console.log('Directory doesnt exist');
+          if (this.value.documents[0] == undefined) {
+            $('#already-downloaded').addClass('hidden');
+            $('#no-documents').removeClass("hidden");
+            $('#download-button').addClass('hidden');
+          }
+          else {
+            $('#already-downloaded').addClass('hidden');
+            $('#no-documents').addClass("hidden");
+            $('#download-button').removeClass('hidden');
+          }
         }
-      }
-      );
+        );
+
+    }
+
+    if (this.platform.is('ios')) {
+      this.fileCtrl.checkDir(this.fileCtrl.dataDirectory, 'documents/' + this.value.id)
+        .then(
+        _ => {
+          console.log(this.value['documents']);
+          $('#download-button').addClass('hidden');
+          $('#no-documents').addClass('hidden');
+          console.log('Directory exists');
+          this.fileCtrl.listDir(this.fileCtrl.dataDirectory, 'documents/' + this.value.id)
+            .then(
+            data => {
+              for (var index = 0; index < data.length; index++) {
+                this.documentsDownloaded.push(
+                  { 'name': data[index].name, 'path': data[index].nativeURL },
+                );
+              }
+            }
+            )
+          console.log(this.value['documents']);
+        }
+        )
+        .catch(
+        err => {
+          console.log('Directory doesnt exist');
+          if (this.value.documents[0] == undefined) {
+            $('#already-downloaded').addClass('hidden');
+            $('#no-documents').removeClass("hidden");
+            $('#download-button').addClass('hidden');
+          }
+          else {
+            $('#already-downloaded').addClass('hidden');
+            $('#no-documents').addClass("hidden");
+            $('#download-button').removeClass('hidden');
+          }
+        }
+        );
+
+    }
 
     for (var index = 0; index < this.value['people'].length; index++) {
       this.peopleArray.push(this.value['people'][index]);
@@ -128,9 +170,15 @@ export class PaperworkItemPage {
   openDocuments(i) {
 
     console.log(this.documents[i]);
-
+    var fileUrl = null;
     var fileName = this.documents[i].name;
-    var fileUrl = this.fileCtrl.externalApplicationStorageDirectory + 'documents/' + this.value.id + '/';
+
+    if (this.platform.is("android")) {
+      fileUrl = this.fileCtrl.applicationStorageDirectory + 'documents/' + this.value.id + '/';
+    }
+    if (this.platform.is("ios")) {
+      fileUrl = this.fileCtrl.dataDirectory + 'documents/' + this.value.id + '/';
+    }
     var type = this.documents[i].name.split('.').pop();
 
     console.log(fileUrl + fileName);
@@ -170,34 +218,69 @@ export class PaperworkItemPage {
     this.value.documents.forEach(document => {
       const fileTransfer: FileTransferObject = this.transfer.create();
       const url = GlobalVar.serverUrl + "file?id=" + document.id;
-      fileTransfer.download(url, this.fileCtrl.externalApplicationStorageDirectory + '/documents/' + this.value.id + '/' + document.name)
-        .then(
-        (entry) => {
-          $('#already-downloaded').removeClass('hidden');
-          $('#download-button').addClass('hidden');
-          $('#no-documents').addClass('hidden');
-          this.closeDownloadLoader();
-        }, (error) => {
 
-          this.closeDownloadLoader();
-          let toast = this.toastCtrl.create({
-            message: 'Errore di rete',
-            duration: 3000
-          });
-          toast.present();
-          console.log(error);
-        })
-        .catch(
-        error => {
-          console.log(error);
-          this.closeDownloadLoader();
-          let toast = this.toastCtrl.create({
-            message: 'Errore di rete',
-            duration: 3000
-          });
-          toast.present();
-        },
-      );
+      if (this.platform.is("android")) {
+        fileTransfer.download(url, this.fileCtrl.applicationStorageDirectory + '/documents/' + this.value.id + '/' + document.name)
+          .then(
+          (entry) => {
+            $('#already-downloaded').removeClass('hidden');
+            $('#download-button').addClass('hidden');
+            $('#no-documents').addClass('hidden');
+            this.closeDownloadLoader();
+          }, (error) => {
+
+            this.closeDownloadLoader();
+            let toast = this.toastCtrl.create({
+              message: 'Errore di rete',
+              duration: 3000
+            });
+            toast.present();
+            console.log(error);
+          })
+          .catch(
+          error => {
+            console.log(error);
+            this.closeDownloadLoader();
+            let toast = this.toastCtrl.create({
+              message: 'Errore di rete',
+              duration: 3000
+            });
+            toast.present();
+          },
+        );
+      }
+
+      if (this.platform.is("ios")) {
+        fileTransfer.download(url, this.fileCtrl.dataDirectory + '/documents/' + this.value.id + '/' + document.name)
+          .then(
+          (entry) => {
+            $('#already-downloaded').removeClass('hidden');
+            $('#download-button').addClass('hidden');
+            $('#no-documents').addClass('hidden');
+            this.closeDownloadLoader();
+          }, (error) => {
+
+            this.closeDownloadLoader();
+            let toast = this.toastCtrl.create({
+              message: 'Errore di rete',
+              duration: 3000
+            });
+            toast.present();
+            console.log(error);
+          })
+          .catch(
+          error => {
+            console.log(error);
+            this.closeDownloadLoader();
+            let toast = this.toastCtrl.create({
+              message: 'Errore di rete',
+              duration: 3000
+            });
+            toast.present();
+          },
+        );
+      }
+
     });
 
   }

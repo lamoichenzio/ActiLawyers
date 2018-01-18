@@ -2,6 +2,7 @@ import { File } from '@ionic-native/file';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Component } from '@angular/core';
 import { NavController, AlertController, ModalController } from 'ionic-angular';
+import { Platform } from 'ionic-angular/platform/platform';
 
 @Component({
   selector: 'page-settings',
@@ -12,7 +13,7 @@ export class SettingsPage {
 
   public alertDelete;
   public alertLogout;
-  constructor(public navCtrl: NavController, public nativeStorage: NativeStorage, public file: File, public alertCtrl: AlertController, public modalCtrl: ModalController) { }
+  constructor(public navCtrl: NavController, public nativeStorage: NativeStorage,public platform: Platform, public file: File, public alertCtrl: AlertController, public modalCtrl: ModalController) { }
 
   // DELETE FUNCTION
   buttonDelete() {
@@ -28,7 +29,7 @@ export class SettingsPage {
       data => console.log('paperworks deleted'),
       error => console.log(error)
     );
-
+    if(this.platform.is("android")){
     this.file.checkDir(this.file.externalApplicationStorageDirectory, 'documents/')
       .then(
       data => {
@@ -52,6 +53,32 @@ export class SettingsPage {
         this.presentAlertDelete();
       },
     )
+  }
+  if(this.platform.is("ios")){
+    this.file.checkDir(this.file.dataDirectory, 'documents/')
+      .then(
+      data => {
+        this.file.removeRecursively(this.file.dataDirectory, 'documents/')
+          .then(
+          data => {
+            result = "deleted";
+            this.initAlertDelete(result);
+            this.presentAlertDelete();
+          },
+          error => {
+            result = "undeleted";
+            this.initAlertDelete(result);
+            this.presentAlertDelete();
+          },
+        )
+      },
+      error => {
+        result = "nodirectory";
+        this.initAlertDelete(result);
+        this.presentAlertDelete();
+      },
+    )
+  }
 
   }
 
@@ -66,6 +93,7 @@ export class SettingsPage {
       data => console.log('paperworks deleted'),
       error => console.log(error)
     );
+    if(this.platform.is("android")){
     this.file.checkDir(this.file.externalApplicationStorageDirectory, 'documents/')
       .then(
       data => {
@@ -77,6 +105,20 @@ export class SettingsPage {
       },
       error => console.log(error),
     )
+  }
+    if (this.platform.is("ios")) {
+      this.file.checkDir(this.file.dataDirectory, 'documents/')
+        .then(
+        data => {
+          this.file.removeRecursively(this.file.dataDirectory, 'documents/')
+            .then(
+            data => console.log("documents deleted"),
+            error => console.log(error),
+          )
+        },
+        error => console.log(error),
+      )
+    }
   }
 
 
